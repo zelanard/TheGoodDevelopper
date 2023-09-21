@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TheGoodDevelopper.Exceptions;
 
 namespace TheGoodDevelopper.Controller
 {
@@ -64,6 +65,7 @@ namespace TheGoodDevelopper.Controller
         /// <exception cref="Exception"></exception>
         private void ReadFile(string path)
         {
+            string errMessage = "Error {0}: Failed to handle file. Please forward this message to support!";
             string line;
             StreamReader reader = null; //init the reader to 0 to be sure we can use reader?.close() later.
 
@@ -76,37 +78,37 @@ namespace TheGoodDevelopper.Controller
                     Log.AppendLine(line);
                 }
             }
-            catch (OutOfMemoryException oOMEx)
+            catch (OutOfMemoryException ex)
             {
-                throw new Exception("Out of memory!", oOMEx);
+                throw new OutOfMemoryException(string.Format(errMessage, "001"));
             }
-            catch (ArgumentOutOfRangeException argOOREx)
+            catch (ArgumentOutOfRangeException ex)
             {
-                throw new Exception("Out of memory!", argOOREx);
+                throw new ArgumentOutOfRangeException(string.Format(errMessage, "002"));
             }
-            catch (ArgumentNullException argNullEx)
+            catch (ArgumentNullException ex)
             {
-                throw new Exception("Out of memory!", argNullEx);
+                throw new ArgumentNullException(string.Format(errMessage, "003"));
             }
-            catch (ArgumentException argEx)
+            catch (ArgumentException ex)
             {
-                throw new Exception("Out of memory!", argEx);
+                throw new ArgumentException(string.Format(errMessage, "004"));
             }
-            catch (FileNotFoundException fileNotFoundEx)
+            catch (FileNotFoundException ex)
             {
-                throw new Exception("Out of memory!", fileNotFoundEx);
+                throw new FileNotFoundException(string.Format(errMessage, "005"));
             }
-            catch (DirectoryNotFoundException dirNotFoundEx)
+            catch (DirectoryNotFoundException ex)
             {
-                throw new Exception("Out of memory!", dirNotFoundEx);
+                throw new DirectoryNotFoundException(string.Format(errMessage, "006"));
             }
-            catch (IOException IOEx)
+            catch (IOException ex)
             {
-                throw new Exception("Out of memory!", IOEx);
+                throw new IOException(string.Format(errMessage, "007"));
             }
             catch (Exception ex)
             {
-                throw new Exception("Out of memory!", ex);
+                throw new Exception(string.Format(errMessage, "008"));
             }
             finally
             {
@@ -117,6 +119,12 @@ namespace TheGoodDevelopper.Controller
         //overrides Object.ToString()
         public override string ToString()
         {
+            string errMessage = "Error {0}: Log file is not set!";
+            Log = null;
+            if (Log == null)
+            {
+                throw new LogNotFoundException(string.Format(errMessage, "009"));
+            }
             return Log.ToString();
         }
     }

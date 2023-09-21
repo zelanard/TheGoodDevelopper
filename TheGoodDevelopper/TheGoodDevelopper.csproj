@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\LogFile.cs" />
+    <Compile Include="Exceptions\LogNotFoundException.cs" />
     <Compile Include="Model\LogController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheGoodDevelopper.Controller;
+using TheGoodDevelopper.Exceptions;
 using TheGoodDevelopper.View;
 
 namespace TheGoodDevelopper.Model
@@ -71,7 +72,14 @@ namespace TheGoodDevelopper.Model
         internal void Start()
         {
             Logdisplay.DisplayLineCount(Logfile.Lines);
-            Logdisplay.DisplayLog(Logfile.ToString());
+            try
+            {
+                Logdisplay.DisplayLog(Logfile.ToString());
+            }catch (LogNotFoundException ex)
+            {
+                Logdisplay.DisplayLog(ex.Message);
+            }
+            
             Logdisplay.WaitForAnyKey();
         }
     }
